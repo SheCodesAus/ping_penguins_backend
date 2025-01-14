@@ -191,7 +191,7 @@ The goal for the Ping Penguins is to build a web-based application for Emma from
 
 ## Database Schema
 
-![Database Schema](img\database-schema.png)
+![Database Schema](/img/database-schema.png)
 
 
 ## Front-End Implementation
