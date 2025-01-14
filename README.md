@@ -4,34 +4,36 @@
 
 ## Table of Contents
 
-- [Your Product Name](#your-product-name)
-  - [Table of Contents](#table-of-contents)
-  - [Mission Statement](#mission-statement)
-  - [Features](#features)
-    - [Summary](#summary)
-    - [Users](#users)
-    - [Sticky Notes](#sticky-notes)
-    - [Collections](#collections)
-    - [Pages/Endpoint Functionality](#pagesendpoint-functionality)
-    - [Nice To Haves](#nice-to-haves)
-  - [Technical Implementation](#technical-implementation)
-    - [Back-End](#back-end)
-    - [Front-End](#front-end)
-    - [Git \& Deployment](#git--deployment)
-  - [Target Audience](#target-audience)
-  - [Back-end Implementation](#back-end-implementation)
-    - [API Specification](#api-specification)
-    - [Object Definitions](#object-definitions)
-      - [Users](#users-1)
-      - [Sticky Notes](#sticky-notes-1)
-    - [Database Schema](#database-schema)
-  - [Front-end Implementation](#front-end-implementation)
-    - [Wireframes](#wireframes)
-      - [Home Page](#home-page)
-      - [Collection List Page](#collection-list-page)
-    - [Colours and Fonts](#colours-and-fonts)
-      - [Primary](#primary)
-      - [Secondary](#secondary)
+- [Mission Statement](#mission-statement)
+- [Features](#features)
+  - [Summary](#summary)
+  - [Users](#users)
+  - [Sticky Notes](#sticky-notes)
+  - [Workshop Boards](#workshop-boards)
+  - [Pages/End Point Functionality](#pagesend-point-functionality)
+  - [Nice To Haves](#nice-to-haves)
+- [Technical Implementation](#technical-implementation)
+  - [Back-End](#back-end)
+  - [Front-End](#front-end)
+  - [Git \& Deployment](#git--deployment)
+- [Target Audience](#target-audience)
+- [Back-end Implementation](#back-end-implementation)
+  - [API Specifications](#api-specifications)
+  - [Object Definitions](#object-definitions)
+    - [Users](#users-1)
+    - [Sticky Notes](#sticky-notes-1)
+  - [Database Schema](#database-schema)
+- [Front-end Implementation](#front-end-implementation)
+  - [Wireframes](#wireframes)
+    - [Landing Page](#landing-page)
+    - [Create Profile](#create-profile)
+    - [Project Board](#project-board)
+    - [Admin Dashboard](#admin-dashboard)
+    - [User Dashboard](#user-dashboard)
+    - [Create New Project](#create-new-project)
+  - [Colours and Fonts](#colours-and-fonts)
+    - [Logo](#logo)
+    - [Design Options](#design-options)
 
 
 ## Mission Statement
@@ -75,6 +77,11 @@ The goal for the Ping Penguins is to build a web-based application for Emma from
 |---------------|-------------------------------------------------------------------------------------------|-------|
 | **Unique Link/Code** | Generated for each workshop. Participants use the project code to access the board. | Back-end uses UID (Unique Identifier) to provide a secure link. |
 | **Board Access** | Boards become accessible at the workshop start time and remain active until the workshop ends. | Access policies can be updated by the Admin. |
+
+### Pages/End Point Functionality
+
+*** Insert ***
+
 
 ### Nice To Haves
 
@@ -195,37 +202,37 @@ The goal for the Ping Penguins is to build a web-based application for Emma from
 
 **Landing Page**
 
-![Landing Page](img\landing-page.PNG)
+![Landing Page](/img/landing-page.PNG)
 
 **Create Profile**
 
-![Create Profile](img\create-profile.PNG)
+![Create Profile](/img/create-profile.PNG)
 
 **Project Board**
 
-![Project Board](img\project-board.PNG)
+![Project Board](/img/project-board.PNG)
 
 **Admin Dashboard**
 
-![Admin Dashboard](img\admin-dashboard.PNG)
+![Admin Dashboard](/img/admin-dashboard.PNG)
 
 **User Dashboard**
 
-![User Dashboard](img\user-dashboard.PNG)
+![User Dashboard](/img/user-dashboard.PNG)
 
 **Create New Project**
 
-![Create New Project](img\create-new-project.PNG)
+![Create New Project](/img/create-new-project.PNG)
 
 
 ### Colours and Fonts
 
 **Logo**
 
-![BloomBoard Logo](img\bloomboard-logo.PNG)
+![Logo](/img/bloomboard-logo.PNG)
 
-**Design Options:** 
+**Design Options** 
 
-![Colours and Fonts - Option 1](img\colours-fonts1.PNG)
+![Colours and Fonts - Option 1](/img/colours-fonts1.PNG)
 
-![Colours and Fonts - Option 2](img\colours-fonts2.PNG)
+![Colours and Fonts - Option 2](/img/colours-fonts2.PNG)
