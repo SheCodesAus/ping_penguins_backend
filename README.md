@@ -1,4 +1,4 @@
-## BloomBoard
+## stickybloom
 
 ### Team PingPenguins
 
@@ -229,7 +229,7 @@ The goal for the Ping Penguins is to build a web-based application for Emma from
 
 **Logo**
 
-![Logo](/img/bloomboard-logo.PNG)
+***stickybloom Logo TBD***
 
 **Design Options** 
 
