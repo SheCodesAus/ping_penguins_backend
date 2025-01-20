@@ -80,8 +80,14 @@ The goal for the Ping Penguins is to build a web-based application for Emma from
 
 ### Pages/End Point Functionality
 
-*** Insert ***
-
+| Pages       | Functionality                                                                                   | Notes |
+|---------------|-------------------------------------------------------------------------------------------|-------|
+| **Landing Page** | - Workshop Details<br> - Link to crowdbloom website<br> - Disclosure<br> - Button to Login/Signup | - Unique link generated for each workshop |
+| **Signup Page** | - Email<br> - Username<br> - Password<br> - Sign Up button | "Already have an account? Login here" button |
+| **Login Page** |  - Username<br> - Password<br> - Log In button | "Don't have an account? Sign up here" button |
+| **Workshop Page** | - Categories<br> - View live sticky notes<br> - Create/post sticky notes | - Countdown feature<br> - Boards becomes accessible at the workshop start time and remains active until the workshop ends |
+| **Admin Dashboard Page** | - Create workshop<br> - Recent workshops<br> - Delete workshop | Requires auth |
+| **Custom 404 Page** | Provides a clear message to users that the requested page is unavailable | pink penguin? |
 
 ### Nice To Haves
 
