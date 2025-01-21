@@ -22,9 +22,9 @@ class BoardList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    
-class CategoryList(APIView):
 
+
+class CategoryList(APIView):
     def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
@@ -32,6 +32,26 @@ class CategoryList(APIView):
 
     def post(self, request):
         serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class NoteList(APIView):
+    def get(self, request):
+        notes = Note.objects.all()
+        serializer = NoteSerializer(notes, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(
