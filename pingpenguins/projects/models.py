@@ -33,5 +33,5 @@ class Note(models.Model):
     owner = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='notes'
+        related_name='owned_notes'
     )
