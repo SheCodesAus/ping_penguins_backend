@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import uuid
 
 class Board(models.Model):
     title = models.CharField(max_length=200) # Char limit 200
@@ -8,7 +9,7 @@ class Board(models.Model):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     image = models.URLField(blank=True) # Optional empty
-    code = models.UUIDField(unique=True) # Unique constraint
+    code = models.UUIDField(default=uuid.uuid4, unique=True, editable=False) # Auto generates the UUID, adds unique constraint, editing disallowed
     created_at = models.DateTimeField(auto_now_add=True) # Stores created datetimestamp for backend db reference
 
 class Category(models.Model):
