@@ -23,6 +23,20 @@ class BoardList(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+class BoardDetail(APIView):
+
+    def get_object(self, code):
+        try:
+            board = Board.objects.get(code=code)
+            return board
+        except Board.DoesNotExist:
+            return Response({"404": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+    def get(self, request, code):
+        board = self.get_object(code)
+        serializer = BoardSerializer(board)
+        return Response(serializer.data)
+
 
 class CategoryList(APIView):
     def get(self, request):
