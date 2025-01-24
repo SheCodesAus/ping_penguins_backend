@@ -32,4 +32,4 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'display_name']
+        fields = ['display_name']
