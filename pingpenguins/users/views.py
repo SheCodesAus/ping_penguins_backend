@@ -73,7 +73,17 @@ class PublicUserDetail(APIView):
         except CustomUser.DoesNotExist:
             raise Http404
 
+    # def get(self, request, pk):
+    #     user = self.get_object(pk)
+    #     serializer = PublicUserSerializer(user, context={'request': request})  # Use the PublicUserSerializer here
+    #     return Response(serializer.data)
+
     def get(self, request, pk):
         user = self.get_object(pk)
-        serializer = PublicUserSerializer(user)  # Use the PublicUserSerializer here
+        
+        # If the user is not authenticated, return an unauthorized response
+        if not request.user.is_authenticated:
+            return Response({"detail": "You are not authorized to view this content."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer = PublicUserSerializer(user, context={'request': request})
         return Response(serializer.data)
