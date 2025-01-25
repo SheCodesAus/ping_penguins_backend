@@ -67,23 +67,14 @@ class CustomAuthToken(ObtainAuthToken):
     })
 
 class PublicUserDetail(APIView):
+    permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
         except CustomUser.DoesNotExist:
             raise Http404
 
-    # def get(self, request, pk):
-    #     user = self.get_object(pk)
-    #     serializer = PublicUserSerializer(user, context={'request': request})  # Use the PublicUserSerializer here
-    #     return Response(serializer.data)
-
     def get(self, request, pk):
         user = self.get_object(pk)
-        
-        # If the user is not authenticated, return an unauthorized response
-        if not request.user.is_authenticated:
-            return Response({"detail": "You are not authorized to view this content."}, status=status.HTTP_401_UNAUTHORIZED)
-
-        serializer = PublicUserSerializer(user, context={'request': request})
+        serializer = PublicUserSerializer(user, context={'request': request})  # Use the PublicUserSerializer here
         return Response(serializer.data)

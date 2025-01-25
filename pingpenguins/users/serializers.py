@@ -33,13 +33,4 @@ class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['display_name']
-    def to_representation(self, instance):
-        # Access the request object from the context to check if the user is authenticated
-        request = self.context.get('request')
-
-        # If the user is not authenticated, raise a PermissionDenied exception or return a custom message
-        if not request.user.is_authenticated:
-            raise PermissionDenied(detail="You are not authorized to view this content.")  # Raise Unauthorized error
-        
-        # If the user is authenticated, return the original representation (display_name)
-        return super().to_representation(instance)   
+    
