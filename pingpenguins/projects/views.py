@@ -63,8 +63,8 @@ class BoardDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    def delete(self, request, pk):
-        project = self.get_object(pk)
+    def delete(self, request, code):
+        project = self.get_object(code)
         #Only Super User can delete board
         if request.user.is_superuser:
             project.delete()
