@@ -5,6 +5,7 @@ from .models import Board, Category, Note
 from .serializers import BoardSerializer, CategorySerializer, NoteSerializer, BoardDetailSerializer
 from .permissions import IsSuperUser, IsOwnerOrReadOnly
 
+
 class BoardList(APIView):
     permission_classes = [IsSuperUser] 
     # Only SuperUser can view Board List and post a board
