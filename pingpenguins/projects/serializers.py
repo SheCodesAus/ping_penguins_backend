@@ -15,11 +15,21 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BoardSerializer(serializers.ModelSerializer):
-    categories = CategorySerializer(many=True, read_only=True)
-    
+    categories = CategorySerializer(many=True, required=False)  # Allow categories to be empty
+
     class Meta:
         model = apps.get_model('projects.Board')
         fields = '__all__'
+
+    def create(self, validated_data):
+        categories_data = validated_data.pop('categories', [])  # Default to empty list if no categories
+        board = apps.get_model('projects.Board').objects.create(**validated_data)
+        for category_data in categories_data:
+            notes_data = category_data.pop('notes', [])
+            category = apps.get_model('projects.Category').objects.create(board=board, **category_data)
+            for note_data in notes_data:
+                apps.get_model('projects.Note').objects.create(category=category, **note_data)
+        return board
 
 class BoardDetailSerializer(BoardSerializer):
     notes = NoteSerializer(many=True, read_only=True)

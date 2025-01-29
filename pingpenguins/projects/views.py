@@ -16,7 +16,6 @@ class BoardList(APIView):
         return Response(serializer.data)
     
     def post(self, request):
-        
         serializer = BoardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
