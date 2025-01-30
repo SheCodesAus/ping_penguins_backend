@@ -1,45 +1,30 @@
 from rest_framework import serializers
-from .models import Board, Category, Note
+from django.apps import apps
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Note
+        model = apps.get_model('projects.Note')
         fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
     notes = NoteSerializer(many=True, read_only=True) 
 
     class Meta:
-        model = Category
+        model = apps.get_model('projects.Category')
         fields = '__all__'
-
-    def create(self, validated_data):
-        notes_data = validated_data.pop('notes', [])
-        category = Category.objects.create(**validated_data)
-        for note_data in notes_data:
-            Note.objects.create(category=category, **note_data)
-        return category
 
 class BoardSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, required=False)  # Allow categories to be empty
 
     class Meta:
-        model = Board
+        model = apps.get_model('projects.Board')
         fields = '__all__'
-
-    def create(self, validated_data):
-        categories_data = validated_data.pop('categories', [])  # Default to empty list if no categories
-        board = Board.objects.create(**validated_data)
-        for category_data in categories_data:
-            category_data['board'] = board  # Set the board field for each category
-            Category.objects.create(**category_data)
-        return board
 
 class BoardDetailSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)  # Read-only nested categories
 
     class Meta:
-        model = Board
+        model = apps.get_model('projects.Board')
         fields = '__all__'
 
     def update(self, instance, validated_data):
