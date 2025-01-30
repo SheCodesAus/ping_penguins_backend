@@ -97,31 +97,56 @@ class CategoryList(APIView):
 
 
 class NoteList(APIView):
-    permission_classes = [
-        IsSuperUser, 
-        permissions.IsAuthenticated
-        ] 
+    permission_classes = [permissions.IsAuthenticated] 
     # Only a User with Auth token can view or create Notes.  SuperUser can create/edit/delete.
 
     def get(self, request):
-        notes = Note.objects.all()
-        serializer = NoteSerializer(notes, many=True)
-        return Response(serializer.data)
+        if request.user.is_superuser:
+            notes = Note.objects.all()
+            serializer = NoteSerializer(notes, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({"403": "Forbidden.  You are not authorised to view this content"}, status=status.HTTP_403_FORBIDDEN)
 
     def post(self, request):
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
-            )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class NoteDetail(APIView):
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+        
+    def get_object(self, pk):
+        try:
+            note = Note.objects.get(pk=pk)
+            self.check_object_permissions(self.request, note)
+            return note
+        except Note.DoesNotExist:
+            return Response({"404": "This Note Does Note Exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+    def get(self, request, pk):
+        note = self.get_object(pk)
+        serializer = NoteSerializer(note, context={'request': request}) # This context is required for the method that determines anonymous permissions in the serializers is applicable
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        note = self.get_object(pk)
+        serializer = NoteSerializer(instance=note,data=request.data,partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
     
-# class NoteDetail(APIView):
-#     permission_classes = [permissions.IsOwnerOrReadOnly] 
-
-#     def get(self, request):
+    def delete(self, request, pk):
+        note = self.get_object(pk)
+        #Only Super Users can delete
+        if request.user.is_superuser:
+            note.delete()
+            return Response({"200: Note deleted successfully"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"403: Forbidden.  You are not authorised to delete this Note"}, status=status.HTTP_403_FORBIDDEN)
