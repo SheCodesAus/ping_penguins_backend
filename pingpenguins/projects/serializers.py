@@ -38,12 +38,7 @@ class BoardDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
-        instance.disclaimer = validated_data.get('disclaimer', instance.disclaimer)
-        instance.date_start = validated_data.get('date_start', instance.date_start)
-        instance.date_end = validated_data.get('date_end', instance.date_end)
-        instance.image = validated_data.get('image', instance.image)
-        instance.code = validated_data.get('code', instance.code)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
         return instance
