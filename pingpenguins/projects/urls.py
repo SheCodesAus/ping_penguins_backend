@@ -6,5 +6,5 @@ urlpatterns = [
     path('board/<uuid:code>/', views.BoardDetail.as_view()), 
     path('category/', views.CategoryList.as_view()),
     path('note/', views.NoteList.as_view()),
-    # path('note/<int:pk>/', views.CategoryDetail.as_view())  This is to be updated once note functionality added
+    path('note/<int:pk>/', views.NoteDetail.as_view())
     ]
