@@ -33,21 +33,21 @@ class BoardDetail(APIView):
     # permission_classes = [IsAuthenticatedReadOnly] 
     # Only auth token/logged in user can view board detail, superuser can post/edit/delete
     
-    def get_object(self, code):
+    def get_object(self, pk):
         try:
-            board = Board.objects.get(code=code)
+            board = Board.objects.get(pk=pk)
             self.check_object_permissions(self.request, board)
             return board
         except Board.DoesNotExist:
             raise Http404
         
-    def get(self, request, code):
-        board = self.get_object(code)
+    def get(self, request, pk):
+        board = self.get_object(pk)
         serializer = BoardDetailSerializer(board)
         return Response(serializer.data)
     
-    def put(self, request, code):
-        board = self.get_object(code)
+    def put(self, request, pk):
+        board = self.get_object(pk)
         serializer = BoardDetailSerializer(
             instance=board,
             data=request.data,
@@ -61,8 +61,8 @@ class BoardDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    def delete(self, request, code):
-        project = self.get_object(code)
+    def delete(self, request, pk):
+        project = self.get_object(pk)
         #Only Super User can delete board
         if request.user.is_superuser:
             project.delete()
