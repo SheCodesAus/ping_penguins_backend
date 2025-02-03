@@ -30,7 +30,7 @@ class BoardList(APIView):
         )
 
 class BoardDetail(APIView):
-    permission_classes = [IsAuthenticatedReadOnly] 
+    # permission_classes = [IsAuthenticatedReadOnly] 
     # Only auth token/logged in user can view board detail, superuser can post/edit/delete
     
     def get_object(self, code):
