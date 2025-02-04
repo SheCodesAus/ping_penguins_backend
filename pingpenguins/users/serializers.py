@@ -9,7 +9,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'username', 'email', 'password', 'confirm_password', 
             'first_name', 'last_name', 'display_name', 'position', 
-            'gender', 'tenure', 'age', 'sticky_note_colour'
+            'gender', 'tenure', 'age', 'sticky_note_colour', 'is_superuser'
         ]
         extra_kwargs = {
             'password': {'write_only': True},
