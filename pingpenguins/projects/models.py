@@ -7,7 +7,7 @@ class Board(models.Model):
     description = models.TextField()
     disclaimer = models.TextField(blank=True) # Optional empty
     date_start = models.DateTimeField()
-    date_end = models.DateTimeField()
+    date_end = models.DateTimeField(blank=True)
     image = models.URLField(blank=True) # Optional empty
     code = models.UUIDField(default=uuid.uuid4, unique=True, editable=False) # Auto generates the UUID, adds unique constraint, editing disallowed
     created_at = models.DateTimeField(auto_now_add=True) # Stores created datetimestamp for backend db reference
