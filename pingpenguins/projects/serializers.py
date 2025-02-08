@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from django.apps import apps
+from users.serializers import PublicUserSerializer
 
 class NoteSerializer(serializers.ModelSerializer):
     board = serializers.PrimaryKeyRelatedField(read_only=True)  
+    owner = PublicUserSerializer(read_only=True)
     
     class Meta:
         model = apps.get_model('projects.Note')
