@@ -107,6 +107,8 @@ class NoteList(APIView):
             return Response({"403": "Forbidden.  You are not authorised to view this content"}, status=status.HTTP_403_FORBIDDEN)
 
     def post(self, request):
+        data = request.data.copy()
+        data['owner'] = request.user.id
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

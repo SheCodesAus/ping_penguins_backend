@@ -2,9 +2,22 @@ from rest_framework import serializers
 from django.apps import apps
 
 class NoteSerializer(serializers.ModelSerializer):
+    board = serializers.PrimaryKeyRelatedField(read_only=True)  
+    
     class Meta:
         model = apps.get_model('projects.Note')
         fields = '__all__'
+
+    def validate_category(self, value):
+        board_id = self.context['request'].data.get('board')
+        if board_id and str(value.board.id) != str(board_id):
+            raise serializers.ValidationError("Category does not belong to the specified board")
+        return value
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['board'] = instance.category.board.id
+        return ret
 
 class CategorySerializer(serializers.ModelSerializer):
     notes = NoteSerializer(many=True, read_only=True) 
