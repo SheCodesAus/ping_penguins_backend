@@ -96,15 +96,12 @@ class CategoryList(APIView):
 
 class NoteList(APIView):
     permission_classes = [permissions.IsAuthenticated] 
-    # Only a User with Auth token can view or create Notes.  SuperUser can create/edit/delete.
+    # Only authenticated users can view or create Notes
 
     def get(self, request):
-        if request.user.is_superuser:
-            notes = Note.objects.all()
-            serializer = NoteSerializer(notes, many=True)
-            return Response(serializer.data)
-        else:
-            return Response({"403": "Forbidden.  You are not authorised to view this content"}, status=status.HTTP_403_FORBIDDEN)
+        notes = Note.objects.all()
+        serializer = NoteSerializer(notes, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         data = request.data.copy()
