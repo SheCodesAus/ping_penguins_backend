@@ -1,26 +1,36 @@
 from rest_framework import serializers
 from django.apps import apps
 from users.serializers import PublicUserSerializer
+from .models import Board, Category, Note
 
 class NoteSerializer(serializers.ModelSerializer):
-    board = serializers.PrimaryKeyRelatedField(read_only=True)  
-    owner = PublicUserSerializer(read_only=True)
+    board = serializers.PrimaryKeyRelatedField(read_only=True)  # Make sure 'board' is read-only if you don't want it to be set
+    owner_display_name = serializers.CharField(source='owner.display_name', read_only=True)  # Display the owner's name
     
     class Meta:
-        model = apps.get_model('projects.Note')
+        model = Note
         fields = '__all__'
 
     def validate_category(self, value):
-        board_id = self.context['request'].data.get('board')
-        if board_id and str(value.board.id) != str(board_id):
-            raise serializers.ValidationError("Category does not belong to the specified board")
+        request = self.context.get('request')
+        if request:
+            board_id = request.data.get('board')
+            if board_id and str(value.board.id) != str(board_id):
+                raise serializers.ValidationError("Category does not belong to the specified board")
         return value
+
+    def create(self, validated_data):
+        # Automatically set the owner to the logged-in user
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            validated_data['owner'] = request.user  # Assign logged-in user to the note owner
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        ret['board'] = instance.category.board.id
+        ret['board'] = instance.category.board.id  # Make sure you're referencing the correct related model
         return ret
-
+    
 class CategorySerializer(serializers.ModelSerializer):
     notes = NoteSerializer(many=True, read_only=True) 
 

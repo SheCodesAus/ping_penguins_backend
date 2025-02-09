@@ -95,18 +95,28 @@ class CategoryList(APIView):
 
 
 class NoteList(APIView):
-    permission_classes = [permissions.IsAuthenticated] 
-    # Only authenticated users can view or create Notes
-
-    def get(self, request):
-        notes = Note.objects.all()
-        serializer = NoteSerializer(notes, many=True)
-        return Response(serializer.data)
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         data = request.data.copy()
         data['owner'] = request.user.id
-        serializer = NoteSerializer(data=request.data)
+
+        category_id = data.get("category")
+        if not category_id:
+            return Response(
+                {"error": "Category ID is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
+            return Response(
+                {"error": "Category does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = NoteSerializer(data=data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
