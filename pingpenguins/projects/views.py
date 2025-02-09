@@ -97,6 +97,15 @@ class CategoryList(APIView):
 class NoteList(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request):
+        notes = Note.objects.filter(owner=request.user)  # Filter notes by authenticated user
+        category_id = request.query_params.get('category')  # Optional category filter
+        if category_id:
+            notes = notes.filter(category_id=category_id)
+
+        serializer = NoteSerializer(notes, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
         data = request.data.copy()
         data['owner'] = request.user.id

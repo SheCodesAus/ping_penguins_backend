@@ -28,7 +28,7 @@ class NoteSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        ret['board'] = instance.category.board.id  # Make sure you're referencing the correct related model
+        ret['board'] = instance.category.board.id  
         return ret
     
 class CategorySerializer(serializers.ModelSerializer):
