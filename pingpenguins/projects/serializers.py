@@ -5,7 +5,7 @@ from .models import Board, Category, Note
 
 class NoteSerializer(serializers.ModelSerializer):
     board = serializers.PrimaryKeyRelatedField(read_only=True)  # Make sure 'board' is read-only if you don't want it to be set
-    owner_display_name = serializers.CharField(source='owner.display_name', read_only=True)  # Display the owner's name
+    owner = PublicUserSerializer(read_only=True)
     
     class Meta:
         model = Note
