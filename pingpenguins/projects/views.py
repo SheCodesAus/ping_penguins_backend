@@ -166,3 +166,22 @@ class NoteDetail(APIView):
             return Response({"202: Note deleted successfully"}, status=status.HTTP_202_ACCEPTED)
         else:
             return Response({"403: Forbidden.  You are not authorised to delete this Note"}, status=status.HTTP_403_FORBIDDEN)
+
+class BoardNotes(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            board = Board.objects.get(pk=pk)
+        except Board.DoesNotExist:
+            raise Http404
+
+        notes = Note.objects.filter(category__board=board)
+        
+        # filter by category as well
+        category_id = request.query_params.get('category')
+        if category_id:
+            notes = notes.filter(category_id=category_id)
+
+        serializer = NoteSerializer(notes, many=True)
+        return Response(serializer.data)
